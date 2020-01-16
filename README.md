@@ -1,4 +1,6 @@
-# TPCDS [![BuildStatus](https://travis-ci.org/Teradata/tpcds.svg?branch=master)](https://travis-ci.org/Teradata/tpcds)
+# TPCDS
+[![Maven Central](https://img.shields.io/maven-central/v/io.prestosql.tpcds/tpcds.svg?label=Maven%20Central)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.prestosql.tpcds%22)
+[![Build Status](https://travis-ci.com/prestosql/tpcds.svg?branch=master)](https://travis-ci.com/prestosql/tpcds)
 
 The Java version of the TPC-DS data generator is based on the C dsdgen distributed
 by the TPC organization. Here is a brief outline of the components and structure of our
@@ -15,15 +17,15 @@ Tables can be generated on the command line, or within a Java program.
 If the program is run with no arguments, it will generate all of the TPC-DS tables at
 a scale factor of 1GB.  The results will be written out to files named `<table_name>.dat`
 
-```java -jar tpcds-1.2-SNAPSHOT-jar-with-dependencies.jar```
+```java -jar tpcds-*-jar-with-dependencies.jar```
 
 If you wanted to generate just the call_center table at a scale of 10GB, you would run
 
-```java -jar tpcds-1.2-SNAPSHOT-jar-with-dependencies.jar --table call_center --scale 10```
+```java -jar tpcds-*-jar-with-dependencies.jar --table call_center --scale 10```
 
 For a list of all options, run `--help`
 
-```java -jar tpcds-1.2-SNAPSHOT-jar-with-dependencies.jar --help```
+```java -jar tpcds-*-jar-with-dependencies.jar --help```
 
 ### Generating Tables Within a Java Program
 To generate a section of a table, call
