@@ -39,6 +39,9 @@
 
         <air.main.basedir>${project.basedir}</air.main.basedir>
 
+        <air.test.parallel>methods</air.test.parallel>
+        <air.test.thread-count>4</air.test.thread-count>
+
         <air.check.skip-extended>true</air.check.skip-extended>
         <air.check.skip-license>false</air.check.skip-license>
         <air.check.skip-checkstyle>false</air.check.skip-checkstyle>
