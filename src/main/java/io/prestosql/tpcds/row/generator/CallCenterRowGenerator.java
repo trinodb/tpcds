@@ -1,0 +1,233 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package io.prestosql.tpcds.row.generator;
+
+import io.prestosql.tpcds.Scaling;
+import io.prestosql.tpcds.Session;
+import io.prestosql.tpcds.SlowlyChangingDimensionUtils.SlowlyChangingDimensionKey;
+import io.prestosql.tpcds.row.CallCenterRow;
+import io.prestosql.tpcds.type.Decimal;
+
+import javax.annotation.concurrent.NotThreadSafe;
+
+import java.util.Optional;
+
+import static com.google.common.base.Preconditions.checkState;
+import static io.prestosql.tpcds.Nulls.createNullBitMap;
+import static io.prestosql.tpcds.SlowlyChangingDimensionUtils.computeScdKey;
+import static io.prestosql.tpcds.SlowlyChangingDimensionUtils.getValueForSlowlyChangingDimension;
+import static io.prestosql.tpcds.Table.CALL_CENTER;
+import static io.prestosql.tpcds.distribution.CallCenterDistributions.getCallCenterAtIndex;
+import static io.prestosql.tpcds.distribution.CallCenterDistributions.getNumberOfCallCenters;
+import static io.prestosql.tpcds.distribution.CallCenterDistributions.pickRandomCallCenterClass;
+import static io.prestosql.tpcds.distribution.CallCenterDistributions.pickRandomCallCenterHours;
+import static io.prestosql.tpcds.distribution.EnglishDistributions.SYLLABLES_DISTRIBUTION;
+import static io.prestosql.tpcds.distribution.NamesDistributions.FirstNamesWeights.GENERAL_FREQUENCY;
+import static io.prestosql.tpcds.distribution.NamesDistributions.FirstNamesWeights.MALE_FREQUENCY;
+import static io.prestosql.tpcds.distribution.NamesDistributions.pickRandomFirstName;
+import static io.prestosql.tpcds.distribution.NamesDistributions.pickRandomLastName;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_ADDRESS;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_CLASS;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_COMPANY;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_EMPLOYEES;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_HOURS;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_MANAGER;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_CLASS;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_DESC;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_ID;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_MARKET_MANAGER;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_NULLS;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_OPEN_DATE_ID;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_SCD;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_SQ_FT;
+import static io.prestosql.tpcds.generator.CallCenterGeneratorColumn.CC_TAX_PERCENTAGE;
+import static io.prestosql.tpcds.random.RandomValueGenerator.generateRandomText;
+import static io.prestosql.tpcds.random.RandomValueGenerator.generateUniformRandomDecimal;
+import static io.prestosql.tpcds.random.RandomValueGenerator.generateUniformRandomInt;
+import static io.prestosql.tpcds.random.RandomValueGenerator.generateWord;
+import static io.prestosql.tpcds.type.Address.makeAddressForColumn;
+import static io.prestosql.tpcds.type.Date.JULIAN_DATA_START_DATE;
+import static java.lang.String.format;
+
+@NotThreadSafe
+public class CallCenterRowGenerator
+        extends AbstractRowGenerator
+{
+    private static final Decimal MIN_TAX_PERCENTAGE = new Decimal(0, 2);  // 0.00
+    private static final Decimal MAX_TAX_PERCENTAGE = new Decimal(12, 2); // 0.12
+    private static final int WIDTH_CC_DIVISION_NAME = 50;
+    private static final int WIDTH_CC_MARKET_CLASS = 50;
+    private static final int WIDTH_CC_MARKET_DESC = 100;
+    private static final int MAX_NUMBER_OF_EMPLOYEES_UNSCALED = 7;   // rises ~ scale ^ 2
+    private static final long JULIAN_DATE_START = JULIAN_DATA_START_DATE - 23;  // 23 is the id of the WEB_SITE table in the c code.  Seems arbitrarily chosen.
+
+    private Optional<CallCenterRow> previousRow = Optional.empty();
+
+    public CallCenterRowGenerator()
+    {
+        super(CALL_CENTER);
+    }
+
+    @Override
+    public RowGeneratorResult generateRowAndChildRows(long rowNumber, Session session, RowGenerator parentRowGenerator, RowGenerator childRowGenerator)
+    {
+        CallCenterRow.Builder builder = new CallCenterRow.Builder();
+        builder.setNullBitMap(createNullBitMap(CALL_CENTER, getRandomNumberStream(CC_NULLS)));
+        builder.setCcCallCenterSk(rowNumber);
+
+        // The id combined with start and end dates represent the unique key for this row.
+        // The id is what would be a primary key if there were only one version of each row
+        // the start and end dates are the version information for the row.
+        SlowlyChangingDimensionKey slowlyChangingDimensionKey = computeScdKey(CALL_CENTER, rowNumber);
+        builder.setCcCallCenterId(slowlyChangingDimensionKey.getBusinessKey());
+        builder.setCcRecStartDateId(slowlyChangingDimensionKey.getStartDate());
+        builder.setCcRecEndDateId(slowlyChangingDimensionKey.getEndDate());
+
+        // -1 indicates null. This never gets set to anything else.  Copying C code.
+        builder.setCcClosedDateId(-1);
+
+        Scaling scaling = session.getScaling();
+        boolean isNewBusinessKey = slowlyChangingDimensionKey.isNewBusinessKey();
+        // These fields only change when there is a new id.  They remain constant across different version of a row.
+        if (isNewBusinessKey) {
+            builder.setCcOpenDateId(JULIAN_DATE_START - generateUniformRandomInt(-365, 0, getRandomNumberStream(CC_OPEN_DATE_ID)));
+            int numberOfCallCenters = getNumberOfCallCenters();
+            int suffix = (int) rowNumber / numberOfCallCenters;
+            String ccName = getCallCenterAtIndex((int) (rowNumber % numberOfCallCenters));
+            if (suffix > 0) {
+                ccName = format("%s_%d", ccName, suffix);
+            }
+            builder.setCcName(ccName);
+            builder.setCcAddress(makeAddressForColumn(CALL_CENTER, getRandomNumberStream(CC_ADDRESS), scaling));
+        }
+        else {
+            checkState(previousRow.isPresent(), "previousRow has not yet been initialized");
+            builder.setCcOpenDateId(previousRow.get().getCcOpenDateId());
+            builder.setCcName(previousRow.get().getCcName());
+            builder.setCcAddress(previousRow.get().getCcAddress());
+        }
+
+        // select the random number that controls if a field changes from one record to the next.
+        int fieldChangeFlag = (int) getRandomNumberStream(CC_SCD).nextRandom();
+
+        // The rest of the fields can either be a new data value or not.
+        // We use a random number to determine which fields to replace and which to retain.
+        // A field changes if isNewBusinessKey is true or the lowest order bit of the random number is zero.
+        // Then we divide the fieldChangeFlag by 2 so the next field is determined by the next lower bit.
+
+        // There is a bug in the C code for adjusting pointer types (which this is) with slowly changing dimensions,
+        // so it always uses the new value
+        String ccClass = pickRandomCallCenterClass(getRandomNumberStream(CC_CLASS));
+        builder.setCcClass(ccClass);
+        fieldChangeFlag >>= 1;
+
+        int ccEmployees = generateUniformRandomInt(1, MAX_NUMBER_OF_EMPLOYEES_UNSCALED * (int) Math.ceil(scaling.getScale()) * (int) Math.ceil(scaling.getScale()), getRandomNumberStream(CC_EMPLOYEES));
+        if (previousRow.isPresent()) {
+            ccEmployees = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcEmployees(), ccEmployees);
+        }
+        builder.setCcEmployees(ccEmployees);
+        fieldChangeFlag >>= 1;
+
+        int ccSqFt = generateUniformRandomInt(100, 700, getRandomNumberStream(CC_SQ_FT));
+        ccSqFt *= ccEmployees;
+        if (previousRow.isPresent()) {
+            ccSqFt = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcSqFt(), ccSqFt);
+        }
+        builder.setCcSqFt(ccSqFt);
+        fieldChangeFlag >>= 1;
+
+        // Another casualty of the bug with pointer types in the C code (see comment above by ccClass).  Will always use a new value.
+        String ccHours = pickRandomCallCenterHours(getRandomNumberStream(CC_HOURS));
+        builder.setCcHours(ccHours);
+        fieldChangeFlag >>= 1;
+
+        String managerFirstName = pickRandomFirstName(session.isSexist() ? MALE_FREQUENCY : GENERAL_FREQUENCY, getRandomNumberStream(CC_MANAGER));
+        String managerLastName = pickRandomLastName(getRandomNumberStream(CC_MANAGER));
+        String ccManager = format("%s %s", managerFirstName, managerLastName);
+        if (previousRow.isPresent()) {
+            ccManager = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcManager(), ccManager);
+        }
+        builder.setCcManager(ccManager);
+        fieldChangeFlag >>= 1;
+
+        int ccMarketId = generateUniformRandomInt(1, 6, getRandomNumberStream(CC_MARKET_ID));
+        if (previousRow.isPresent()) {
+            ccMarketId = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcMarketId(), ccMarketId);
+        }
+        builder.setCcMarketId(ccMarketId);
+        fieldChangeFlag >>= 1;
+
+        String ccMarketClass = generateRandomText(20, WIDTH_CC_MARKET_CLASS, getRandomNumberStream(CC_MARKET_CLASS));
+        if (previousRow.isPresent()) {
+            ccMarketClass = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcMarketClass(), ccMarketClass);
+        }
+        builder.setCcMarketClass(ccMarketClass);
+        fieldChangeFlag >>= 1;
+
+        String ccMarketDesc = generateRandomText(20, WIDTH_CC_MARKET_DESC, getRandomNumberStream(CC_MARKET_DESC));
+        if (previousRow.isPresent()) {
+            ccMarketDesc = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcMarketDesc(), ccMarketDesc);
+        }
+        builder.setCcMarketDesc(ccMarketDesc);
+        fieldChangeFlag >>= 1;
+
+        String marketManagerFirstName = pickRandomFirstName(session.isSexist() ? MALE_FREQUENCY : GENERAL_FREQUENCY, getRandomNumberStream(CC_MARKET_MANAGER));
+        String marketManagerLastName = pickRandomLastName(getRandomNumberStream(CC_MARKET_MANAGER));
+        String ccMarketManager = format("%s %s", marketManagerFirstName, marketManagerLastName);
+        if (previousRow.isPresent()) {
+            ccMarketManager = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcMarketManager(), ccMarketManager);
+        }
+        builder.setCcMarketManager(ccMarketManager);
+        fieldChangeFlag >>= 1;
+
+        int ccCompany = generateUniformRandomInt(1, 6, getRandomNumberStream(CC_COMPANY));
+        if (previousRow.isPresent()) {
+            ccCompany = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcCompany(), ccCompany);
+        }
+        builder.setCcCompany(ccCompany);
+        fieldChangeFlag >>= 1;
+
+        int ccDivisionId = generateUniformRandomInt(1, 6, getRandomNumberStream(CC_COMPANY));
+        if (previousRow.isPresent()) {
+            ccDivisionId = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcDivisionId(), ccDivisionId);
+        }
+        builder.setCcDivisionId(ccDivisionId);
+        fieldChangeFlag >>= 1;
+
+        String ccDivisionName = generateWord(ccDivisionId, WIDTH_CC_DIVISION_NAME, SYLLABLES_DISTRIBUTION);
+        if (previousRow.isPresent()) {
+            ccDivisionName = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcDivisionName(), ccDivisionName);
+        }
+        builder.setCcDivisionName(ccDivisionName);
+        fieldChangeFlag >>= 1;
+
+        String ccCompanyName = generateWord(ccCompany, 10, SYLLABLES_DISTRIBUTION);
+        if (previousRow.isPresent()) {
+            ccCompanyName = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcCompanyName(), ccCompanyName);
+        }
+        builder.setCcCompanyName(ccCompanyName);
+        fieldChangeFlag >>= 1;
+
+        Decimal ccTaxPercentage = generateUniformRandomDecimal(MIN_TAX_PERCENTAGE, MAX_TAX_PERCENTAGE, getRandomNumberStream(CC_TAX_PERCENTAGE));
+        if (previousRow.isPresent()) {
+            ccTaxPercentage = getValueForSlowlyChangingDimension(fieldChangeFlag, isNewBusinessKey, previousRow.get().getCcTaxPercentage(), ccTaxPercentage);
+        }
+        builder.setCcTaxPercentage(ccTaxPercentage);
+
+        CallCenterRow newRow = builder.build();
+        previousRow = Optional.of(newRow);
+        return new RowGeneratorResult(newRow);
+    }
+}
