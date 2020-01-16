@@ -117,7 +117,6 @@ public class CustomerRow
                 getStringOrNull(cBirthCountry, C_BIRTH_COUNTRY),
                 cLogin,
                 getStringOrNull(cEmailAddress, C_EMAIL_ADDRESS),
-                getStringOrNull(cLastReviewDate, C_LAST_REVIEW_DATE)
-        );
+                getStringOrNull(cLastReviewDate, C_LAST_REVIEW_DATE));
     }
 }

@@ -25,7 +25,8 @@ import static io.prestosql.tpcds.column.ColumnType.Base.VARCHAR;
 // https://www.apache.org/licenses/LICENSE-2.0.
 public class ColumnType
 {
-    public enum Base {
+    public enum Base
+    {
         INTEGER,
         IDENTIFIER,
         DATE,

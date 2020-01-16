@@ -14,7 +14,8 @@
 
 package io.prestosql.tpcds;
 
-public class InvalidOptionException extends RuntimeException
+public class InvalidOptionException
+        extends RuntimeException
 {
     public InvalidOptionException(String optionName, String value)
     {

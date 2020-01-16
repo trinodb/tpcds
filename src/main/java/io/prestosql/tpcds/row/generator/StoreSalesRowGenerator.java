@@ -67,7 +67,7 @@ public class StoreSalesRowGenerator
     // future readers.
     // private long nextDateIndex;
     // private long julianDate;
-    private int remainingLineItems = 0;
+    private int remainingLineItems;
     private OrderInfo orderInfo = new OrderInfo();
     private int itemIndex;
 

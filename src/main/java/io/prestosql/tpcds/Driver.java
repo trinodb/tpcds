@@ -57,9 +57,9 @@ public class Driver
         for (int i = 1; i <= session.getParallelism(); i++) {
             int chunkNumber = i;
             new Thread(() -> {
-                        TableGenerator tableGenerator = new TableGenerator(session.withChunkNumber(chunkNumber));
-                        tablesToGenerate.forEach(tableGenerator::generateTable);
-                    }).start();
+                TableGenerator tableGenerator = new TableGenerator(session.withChunkNumber(chunkNumber));
+                tablesToGenerate.forEach(tableGenerator::generateTable);
+            }).start();
         }
     }
 }

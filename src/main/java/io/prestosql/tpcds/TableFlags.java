@@ -39,9 +39,9 @@ public class TableFlags
 
     public static class TableFlagsBuilder
     {
-        private boolean keepsHistory = false;
-        private boolean isSmall = false;
-        private boolean isDateBased = false;
+        private boolean keepsHistory;
+        private boolean isSmall;
+        private boolean isDateBased;
 
         public TableFlagsBuilder() {}
 

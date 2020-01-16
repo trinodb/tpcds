@@ -87,7 +87,7 @@ public class CatalogSalesRowGenerator
     private long julianDate;
     private long nextDateIndex;
 
-    private int remainingLineItems = 0;
+    private int remainingLineItems;
     private OrderInfo orderInfo = new OrderInfo(); // initialize with all zeros because one of the fields is used in generation of new orderInfos.
     private int ticketItemBase;
 

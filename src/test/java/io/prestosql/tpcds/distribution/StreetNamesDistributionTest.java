@@ -24,14 +24,16 @@ import static org.testng.Assert.assertEquals;
 public class StreetNamesDistributionTest
 {
     @Test
-    public void testPickRandomStreetNameDefault() throws Exception
+    public void testPickRandomStreetNameDefault()
+            throws Exception
     {
         String result = pickRandomStreetName(DEFAULT, new TestingRandomNumberStream(7000));
         assertEquals(result, "Center");
     }
 
     @Test
-    public void testPickRandomStreetNameHalfEmpty() throws Exception
+    public void testPickRandomStreetNameHalfEmpty()
+            throws Exception
     {
         String result = pickRandomStreetName(HALF_EMPTY, new TestingRandomNumberStream(7000));
         assertEquals(result, "");

@@ -163,7 +163,6 @@ public class DateDimRow
                 getStringOrNullForBoolean(dCurrentWeek, D_CURRENT_WEEK),
                 getStringOrNullForBoolean(dCurrentMonth, D_CURRENT_MONTH),
                 getStringOrNullForBoolean(dCurrentQuarter, D_CURRENT_QUARTER),
-                getStringOrNullForBoolean(dCurrentYear, D_CURRENT_YEAR)
-        );
+                getStringOrNullForBoolean(dCurrentYear, D_CURRENT_YEAR));
     }
 }

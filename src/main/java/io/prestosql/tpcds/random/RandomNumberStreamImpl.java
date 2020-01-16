@@ -26,7 +26,7 @@ public class RandomNumberStreamImpl
 
     private long seed;
     private final long initialSeed;
-    private int seedsUsed = 0;
+    private int seedsUsed;
     private final int seedsPerRow;
 
     public RandomNumberStreamImpl(int seedsPerRow)

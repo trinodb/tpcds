@@ -56,7 +56,7 @@ public class DriverTest
             fail("expected exception");
         }
         catch (InvalidOptionException e) {
-           assertEquals(e.getMessage(), "Invalid value for table: 'bad_table_name'. ");
+            assertEquals(e.getMessage(), "Invalid value for table: 'bad_table_name'. ");
         }
     }
 

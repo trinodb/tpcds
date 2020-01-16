@@ -76,6 +76,7 @@ public class WebSalesRow
     private final long wsPromoSk;
     private final long wsOrderNumber;
     private final Pricing wsPricing;
+
     public WebSalesRow(long nullBitMap,
             long wsSoldDateSk,
             long wsSoldTimeSk,

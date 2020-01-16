@@ -29,7 +29,8 @@ public final class LocationTypesDistribution
         return LOCATION_TYPES_DISTRIBUTION.pickRandomValue(0, locationTypeWeights.ordinal(), stream);
     }
 
-    public enum LocationTypeWeights {
+    public enum LocationTypeWeights
+    {
         UNIFORM,
         DISTRIBUTION_FREQUENCY
     }

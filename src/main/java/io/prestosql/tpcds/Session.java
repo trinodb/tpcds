@@ -78,8 +78,7 @@ public class Session
                 this.noSexism,
                 this.parallelism,
                 this.chunkNumber,
-                this.overwrite
-        );
+                this.overwrite);
     }
 
     public Session withScale(double scale)
@@ -95,8 +94,7 @@ public class Session
                 this.noSexism,
                 this.parallelism,
                 this.chunkNumber,
-                this.overwrite
-        );
+                this.overwrite);
     }
 
     public Session withParallelism(int parallelism)
@@ -112,8 +110,7 @@ public class Session
                 this.noSexism,
                 parallelism,
                 this.chunkNumber,
-                this.overwrite
-        );
+                this.overwrite);
     }
 
     public Session withChunkNumber(int chunkNumber)
@@ -129,8 +126,7 @@ public class Session
                 this.noSexism,
                 this.parallelism,
                 chunkNumber,
-                this.overwrite
-        );
+                this.overwrite);
     }
 
     public Session withNoSexism(boolean noSexism)
@@ -146,8 +142,7 @@ public class Session
                 noSexism,
                 this.parallelism,
                 this.chunkNumber,
-                this.overwrite
-        );
+                this.overwrite);
     }
 
     public Scaling getScaling()

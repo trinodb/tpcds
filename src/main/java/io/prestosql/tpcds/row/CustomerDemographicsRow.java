@@ -74,7 +74,6 @@ public class CustomerDemographicsRow
                 getStringOrNull(cdCreditRating, CD_CREDIT_RATING),
                 getStringOrNull(cdDepCount, CD_DEP_COUNT),
                 getStringOrNull(cdDepEmployedCount, CD_DEP_EMPLOYED_COUNT),
-                getStringOrNull(cdDepCollegeCount, CD_DEP_COLLEGE_COUNT)
-        );
+                getStringOrNull(cdDepCollegeCount, CD_DEP_COLLEGE_COUNT));
     }
 }

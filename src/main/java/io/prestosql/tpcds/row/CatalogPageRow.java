@@ -41,15 +41,15 @@ public class CatalogPageRow
     private final String cpType;
 
     public CatalogPageRow(long cpCatalogPageSk,
-                          String cpCatalogPageId,
-                          long cpStartDateId,
-                          long cpEndDateId,
-                          String cpDepartment,
-                          int cpCatalogNumber,
-                          int cpCatalogPageNumber,
-                          String cpDescription,
-                          String cpType,
-                          long nullBitMap)
+            String cpCatalogPageId,
+            long cpStartDateId,
+            long cpEndDateId,
+            String cpDepartment,
+            int cpCatalogNumber,
+            int cpCatalogPageNumber,
+            String cpDescription,
+            String cpType,
+            long nullBitMap)
     {
         super(nullBitMap, CP_CATALOG_PAGE_SK);
         this.cpCatalogPageSk = cpCatalogPageSk;
@@ -67,13 +67,13 @@ public class CatalogPageRow
     public List<String> getValues()
     {
         return newArrayList(getStringOrNullForKey(cpCatalogPageSk, CP_CATALOG_PAGE_SK),
-                            getStringOrNull(cpCatalogPageId, CP_CATALOG_PAGE_ID),
-                            getStringOrNullForKey(cpStartDateId, CP_START_DATE_ID),
-                            getStringOrNullForKey(cpEndDateId, CP_END_DATE_ID),
-                            getStringOrNull(cpDepartment, CP_DEPARTMENT),
-                            getStringOrNull(cpCatalogNumber, CP_CATALOG_NUMBER),
-                            getStringOrNull(cpCatalogPageNumber, CP_CATALOG_PAGE_NUMBER),
-                            getStringOrNull(cpDescription, CP_DESCRIPTION),
-                            getStringOrNull(cpType, CP_TYPE));
+                getStringOrNull(cpCatalogPageId, CP_CATALOG_PAGE_ID),
+                getStringOrNullForKey(cpStartDateId, CP_START_DATE_ID),
+                getStringOrNullForKey(cpEndDateId, CP_END_DATE_ID),
+                getStringOrNull(cpDepartment, CP_DEPARTMENT),
+                getStringOrNull(cpCatalogNumber, CP_CATALOG_NUMBER),
+                getStringOrNull(cpCatalogPageNumber, CP_CATALOG_PAGE_NUMBER),
+                getStringOrNull(cpDescription, CP_DESCRIPTION),
+                getStringOrNull(cpType, CP_TYPE));
     }
 }

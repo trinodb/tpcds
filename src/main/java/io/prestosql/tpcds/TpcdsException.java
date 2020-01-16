@@ -14,7 +14,8 @@
 
 package io.prestosql.tpcds;
 
-public class TpcdsException extends RuntimeException
+public class TpcdsException
+        extends RuntimeException
 {
     public TpcdsException(String message)
     {

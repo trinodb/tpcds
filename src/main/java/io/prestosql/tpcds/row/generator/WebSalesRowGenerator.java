@@ -80,8 +80,8 @@ public class WebSalesRowGenerator
     // future readers.
     // private long nextDateIndex;
     // private long julianDate;
-    private int[] itemPermutation = null;
-    private int remainingLineItems = 0;
+    private int[] itemPermutation;
+    private int remainingLineItems;
     private OrderInfo orderInfo;
     private int itemIndex;
 

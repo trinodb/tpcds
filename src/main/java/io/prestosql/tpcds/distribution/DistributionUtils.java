@@ -42,7 +42,7 @@ public final class DistributionUtils
     protected static final class WeightsBuilder
     {
         ImmutableList.Builder<Integer> weightsBuilder = ImmutableList.builder();
-        int previousWeight = 0;
+        int previousWeight;
 
         public WeightsBuilder computeAndAddNextWeight(int weight)
         {
