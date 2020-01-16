@@ -23,7 +23,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.FileAssert.fail;
 
-public class DriverTest
+public class TestDriver
 {
     @Test
     public void testParsing()

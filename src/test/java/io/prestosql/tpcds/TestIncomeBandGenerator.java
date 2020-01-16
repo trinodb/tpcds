@@ -18,86 +18,86 @@ import org.testng.annotations.Test;
 
 import static io.prestosql.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.prestosql.tpcds.Session.getDefaultSession;
-import static io.prestosql.tpcds.Table.CUSTOMER_DEMOGRAPHICS;
+import static io.prestosql.tpcds.Table.INCOME_BAND;
 
-public class CustomerDemographicsGeneratorTest
+public class TestIncomeBandGenerator
 {
-    private static final Session TEST_SESSION = getDefaultSession().withTable(CUSTOMER_DEMOGRAPHICS);
+    private static final Session TEST_SESSION = getDefaultSession().withTable(INCOME_BAND);
 
     // See the comment in CallCenterGeneratorTest for an explanation on the purpose of this test.
     @Test
     public void testScaleFactor0_01()
     {
         Session session = TEST_SESSION.withScale(0.01);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, session, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor1()
     {
-        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, TEST_SESSION, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor10()
     {
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor100()
     {
         Session session = TEST_SESSION.withScale(100);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor300()
     {
         Session session = TEST_SESSION.withScale(300);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor1000()
     {
         Session session = TEST_SESSION.withScale(1000);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor3000()
     {
         Session session = TEST_SESSION.withScale(3000);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor10000()
     {
         Session session = TEST_SESSION.withScale(10000);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor30000()
     {
         Session session = TEST_SESSION.withScale(30000);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testScaleFactor100000()
     {
         Session session = TEST_SESSION.withScale(100000);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 
     @Test
     public void testUndefinedScale()
     {
         Session session = TEST_SESSION.withScale(15);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER_DEMOGRAPHICS), CUSTOMER_DEMOGRAPHICS, TEST_SESSION, "8831872c6d56ea9d4f24701f2feaef48");
+        assertPartialMD5(1, session.getScaling().getRowCount(INCOME_BAND), INCOME_BAND, session, "db8e8012be51ef81cf215774bec95533");
     }
 }

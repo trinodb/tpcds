@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 import static io.prestosql.tpcds.SlowlyChangingDimensionUtils.getValueForSlowlyChangingDimension;
 import static org.testng.Assert.assertEquals;
 
-public class SlowlyChangingDimensionUtilsTest
+public class TestSlowlyChangingDimensionUtils
 {
     @Test
     public void testUpdatesDimensionForNewKey()

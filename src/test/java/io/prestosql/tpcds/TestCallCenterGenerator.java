@@ -20,7 +20,7 @@ import static io.prestosql.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.prestosql.tpcds.Session.getDefaultSession;
 import static io.prestosql.tpcds.Table.CALL_CENTER;
 
-public class CallCenterGeneratorTest
+public class TestCallCenterGenerator
 {
     private static final Session TEST_SESSION = getDefaultSession().withTable(CALL_CENTER);
 

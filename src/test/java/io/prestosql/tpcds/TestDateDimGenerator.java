@@ -18,86 +18,86 @@ import org.testng.annotations.Test;
 
 import static io.prestosql.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.prestosql.tpcds.Session.getDefaultSession;
-import static io.prestosql.tpcds.Table.SHIP_MODE;
+import static io.prestosql.tpcds.Table.DATE_DIM;
 
-public class ShipModeGeneratorTest
+public class TestDateDimGenerator
 {
-    private static final Session TEST_SESSION = getDefaultSession().withTable(SHIP_MODE);
+    private static final Session TEST_SESSION = getDefaultSession().withTable(DATE_DIM);
 
     // See the comment in CallCenterGeneratorTest for an explanation on the purpose of this test.
     @Test
     public void testScaleFactor0_01()
     {
         Session session = TEST_SESSION.withScale(0.01);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor1()
     {
-        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, TEST_SESSION, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(DATE_DIM), DATE_DIM, TEST_SESSION, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor10()
     {
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor100()
     {
         Session session = TEST_SESSION.withScale(100);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor300()
     {
         Session session = TEST_SESSION.withScale(300);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor1000()
     {
         Session session = TEST_SESSION.withScale(1000);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor3000()
     {
         Session session = TEST_SESSION.withScale(3000);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor10000()
     {
         Session session = TEST_SESSION.withScale(10000);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor30000()
     {
         Session session = TEST_SESSION.withScale(30000);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testScaleFactor100000()
     {
         Session session = TEST_SESSION.withScale(100000);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 
     @Test
     public void testUndefinedScale()
     {
         Session session = TEST_SESSION.withScale(15);
-        assertPartialMD5(1, session.getScaling().getRowCount(SHIP_MODE), SHIP_MODE, session, "791d16af982a67ad170a6b6527e25a35");
+        assertPartialMD5(1, session.getScaling().getRowCount(DATE_DIM), DATE_DIM, session, "f3e77714328dcc57302777e72fd7747c");
     }
 }

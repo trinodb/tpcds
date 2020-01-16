@@ -18,86 +18,86 @@ import org.testng.annotations.Test;
 
 import static io.prestosql.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.prestosql.tpcds.Session.getDefaultSession;
-import static io.prestosql.tpcds.Table.PROMOTION;
+import static io.prestosql.tpcds.Table.HOUSEHOLD_DEMOGRAPHICS;
 
-public class PromotionGeneratorTest
+public class TestHouseholdDemographicsGenerator
 {
-    private static final Session TEST_SESSION = getDefaultSession().withTable(PROMOTION);
+    private static final Session TEST_SESSION = getDefaultSession().withTable(HOUSEHOLD_DEMOGRAPHICS);
 
     // See the comment in CallCenterGeneratorTest for an explanation on the purpose of this test.
     @Test
     public void testScaleFactor0_01()
     {
         Session session = TEST_SESSION.withScale(0.01);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "63d6510abd4dd6bc8bd805946ffb1eff");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor1()
     {
-        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(PROMOTION), PROMOTION, TEST_SESSION, "acb42558d0dc5e0ab6df5a664c1629cf");
+        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, TEST_SESSION, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor10()
     {
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "b8e8a7741f64edc5d09fdb0453c86705");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor100()
     {
         Session session = TEST_SESSION.withScale(100);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "1d36d55e0dd471e106bf9f6a8ae7ad6a");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor300()
     {
         Session session = TEST_SESSION.withScale(300);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "cdda72807f18b8cb2603ded828e599a3");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor1000()
     {
         Session session = TEST_SESSION.withScale(1000);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "85a93630e8affdd2a4270bf786373a00");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor3000()
     {
         Session session = TEST_SESSION.withScale(3000);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "2b5d5447b48401c3bf637b04fb38235f");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor10000()
     {
         Session session = TEST_SESSION.withScale(10000);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "f46a5075d3ca5b0b0bf614e5524774e1");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor30000()
     {
         Session session = TEST_SESSION.withScale(30000);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "7bd194be9d7e07213b4bcef7d9df8782");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testScaleFactor100000()
     {
         Session session = TEST_SESSION.withScale(100000);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "20ed846a6687e222e636d83508a96e43");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 
     @Test
     public void testUndefinedScale()
     {
         Session session = TEST_SESSION.withScale(15);
-        assertPartialMD5(1, session.getScaling().getRowCount(PROMOTION), PROMOTION, session, "f5753aa1a10502488d520a8c025cd8c9");
+        assertPartialMD5(1, session.getScaling().getRowCount(HOUSEHOLD_DEMOGRAPHICS), HOUSEHOLD_DEMOGRAPHICS, session, "dccf2ff17c5e420021fbf92bf9a0a5ec");
     }
 }

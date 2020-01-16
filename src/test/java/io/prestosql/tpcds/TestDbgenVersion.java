@@ -21,7 +21,7 @@ import static io.prestosql.tpcds.Table.DBGEN_VERSION;
 import static io.prestosql.tpcds.TableGenerator.formatRow;
 import static org.testng.Assert.assertTrue;
 
-public class DbgenVersionTest
+public class TestDbgenVersion
 {
     private static final Session TEST_SESSION = getDefaultSession().withTable(DBGEN_VERSION);
 

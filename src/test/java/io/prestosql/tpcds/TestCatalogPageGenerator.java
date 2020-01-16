@@ -20,7 +20,7 @@ import static io.prestosql.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.prestosql.tpcds.Session.getDefaultSession;
 import static io.prestosql.tpcds.Table.CATALOG_PAGE;
 
-public class CatalogPageGeneratorTest
+public class TestCatalogPageGenerator
 {
     private static final Session TEST_SESSION = getDefaultSession().withTable(CATALOG_PAGE);
 

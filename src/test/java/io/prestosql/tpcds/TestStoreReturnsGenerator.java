@@ -22,7 +22,7 @@ import static io.prestosql.tpcds.Parallel.splitWork;
 import static io.prestosql.tpcds.Session.getDefaultSession;
 import static io.prestosql.tpcds.Table.STORE_RETURNS;
 
-public class StoreReturnsGeneratorTest
+public class TestStoreReturnsGenerator
 {
     private static final Session TEST_SESSION = getDefaultSession().withTable(STORE_RETURNS);
 
