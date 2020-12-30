@@ -1,10 +1,8 @@
 # TPCDS
-[![Maven Central](https://img.shields.io/maven-central/v/io.prestosql.tpcds/tpcds.svg?label=Maven%20Central)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.prestosql.tpcds%22)
-[![Build Status](https://travis-ci.com/prestosql/tpcds.svg?branch=master)](https://travis-ci.com/prestosql/tpcds)
+[![Maven Central](https://img.shields.io/maven-central/v/io.trino.tpcds/tpcds.svg?label=Maven%20Central)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.trino.tpcds%22)
+[![Build Status](https://travis-ci.com/trinodb/tpcds.svg?branch=master)](https://travis-ci.com/trinodb/tpcds)
 
-The Java version of the TPC-DS data generator is based on the C dsdgen distributed
-by the TPC organization. Here is a brief outline of the components and structure of our
-version of TPC-DS dsdgen and the C version that it is based on.
+The Java version of the TPC-DS data generator is based on the C dsdgen distributed by the TPC organization. Here is a brief outline of the components and structure of our version of TPC-DS dsdgen and the C version that it is based on.
 
 ## Getting Started
 This project uses maven.  To build it run `mvn install`.
