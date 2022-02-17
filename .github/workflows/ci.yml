@@ -8,7 +8,7 @@ on:
 
 concurrency:
   # Non-PR builds have singleton concurrency groups.
-  group: "workflow = ${{ github.workflow }}, ${{ github.event.name == 'pull_request' && pr = github.event.pull_request.id || ref = github.event.ref }}"
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
