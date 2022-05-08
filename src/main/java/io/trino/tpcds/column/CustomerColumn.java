@@ -41,7 +41,7 @@ public enum CustomerColumn
     C_BIRTH_COUNTRY(varchar(20)),
     C_LOGIN(character(13)),
     C_EMAIL_ADDRESS(character(50)),
-    C_LAST_REVIEW_DATE_SK(IDENTIFIER);
+    C_LAST_REVIEW_DATE(IDENTIFIER);
 
     private final ColumnType type;
 
