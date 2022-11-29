@@ -135,6 +135,6 @@ public class Decimal
             temp /= 10.0;
         }
 
-        return Double.toString(temp);
+        return "" + temp;
     }
 }
