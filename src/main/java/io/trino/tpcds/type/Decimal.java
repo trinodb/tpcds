@@ -14,6 +14,8 @@
 
 package io.trino.tpcds.type;
 
+import org.apache.xmlgraphics.util.DoubleFormatUtil;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
 
@@ -135,6 +137,8 @@ public class Decimal
             temp /= 10.0;
         }
 
-        return "" + temp;
+        StringBuffer result = new StringBuffer();
+        DoubleFormatUtil.formatDouble(temp, precision, precision, result);
+        return result.toString();
     }
 }
