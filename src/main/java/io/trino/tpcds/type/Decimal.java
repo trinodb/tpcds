@@ -16,7 +16,6 @@ package io.trino.tpcds.type;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
-import static java.util.Locale.ENGLISH;
 
 public class Decimal
 {
