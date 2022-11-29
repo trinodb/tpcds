@@ -136,6 +136,6 @@ public class Decimal
             temp /= 10.0;
         }
 
-        return String.format(ENGLISH, "%." + precision + "f", temp);
+        return Double.toString(temp);
     }
 }
