@@ -35,69 +35,69 @@ public class TestReasonGenerator
     @Test
     public void testScaleFactor1()
     {
-        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(REASON), REASON, TEST_SESSION, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(REASON), REASON, TEST_SESSION, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor10()
     {
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor100()
     {
         Session session = TEST_SESSION.withScale(100);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor300()
     {
         Session session = TEST_SESSION.withScale(300);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor1000()
     {
         Session session = TEST_SESSION.withScale(1000);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor3000()
     {
         Session session = TEST_SESSION.withScale(3000);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor10000()
     {
         Session session = TEST_SESSION.withScale(10000);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor30000()
     {
         Session session = TEST_SESSION.withScale(30000);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testScaleFactor100000()
     {
         Session session = TEST_SESSION.withScale(100000);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 
     @Test
     public void testUndefinedScale()
     {
         Session session = TEST_SESSION.withScale(15);
-        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "0b7c777453d5cab9a7280dc5d6899644");
+        assertPartialMD5(1, session.getScaling().getRowCount(REASON), REASON, session, "6348c26c002726e0fec79bcb2dd6e7aa");
     }
 }
