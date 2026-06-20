@@ -31,20 +31,20 @@ public class TestCustomerGenerator
     public void testScaleFactor0_01()
     {
         Session session = TEST_SESSION.withScale(0.01);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER), CUSTOMER, session, "5ce777ccf5ab50f2c172b6740c46cd59");
+        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER), CUSTOMER, session, "d7fbf74d3a6902abc28fd90d2cf6e0d9");
     }
 
     @Test
     public void testScaleFactor1()
     {
-        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(CUSTOMER), CUSTOMER, TEST_SESSION, "3672ffdefac3cf00413ecef71a753636");
+        assertPartialMD5(1, TEST_SESSION.getScaling().getRowCount(CUSTOMER), CUSTOMER, TEST_SESSION, "a08066ed04041d3370f923a9a3969900");
     }
 
     @Test
     public void testScaleFactor10()
     {
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER), CUSTOMER, session, "486a030a55d468ef15ff2ff01583e6dc");
+        assertPartialMD5(1, session.getScaling().getRowCount(CUSTOMER), CUSTOMER, session, "7842d4e8c9fc489c8c9ad7cf6d6064af");
     }
 
     @Test
@@ -52,15 +52,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(100).withParallelism(100).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "aee17ceb6e0eb91e619f952b6483b56f");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "c962b75bedf11b6d0b2f3ab4c7b2b20a");
 
         session = session.withChunkNumber(50);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "082a5eba9c3e7e0a460800cd3187f924");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "d5f8b7401f398fd2f9bee77e33cf1350");
 
         session = session.withChunkNumber(100);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "0d5d8e9be795a5b726468e327727bf90");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "01dac32e9b5c99f66c51433b7a5e6738");
     }
 
     @Test
@@ -68,15 +68,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(300).withParallelism(300).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "a383aa95f9ef6f37a97a89e54f35c295");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "514112b6a3c44f91439fd010f0a579f9");
 
         session = session.withChunkNumber(50);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "5139a52ecc791304f8a253edd96fcc29");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "36f3f11ff1b86798c8b67df347778551");
 
         session = session.withChunkNumber(100);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "79c3a3edb6745f94fecd0e4f7e16cbc3");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "20f60b7f48c22da556fc9946de9d70b0");
     }
 
     @Test
@@ -84,15 +84,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(1000).withParallelism(1000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "dc20e6a33f5535d3b85f76c6dcb2347b");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "c64d46135879de1362adc7a68cf5c97d");
 
         session = session.withChunkNumber(500);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "e2974772ba45183629aea977554f7c04");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "2e111f50c9509b5b5e1e922a06bc3386");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "7f64d07701b9ecd7299ab986b3200c5a");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "328e566ab8dc5ab912a1bd2ab5514ed1");
     }
 
     @Test
@@ -100,15 +100,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(3000).withParallelism(3000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "2121a0ea90b98d45d22c5148544a9781");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "c06effcde07491152098ed35d07d3a2d");
 
         session = session.withChunkNumber(500);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "f8b85d5d1ad9ed2570df44a7dc97a31b");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "2aa846f9a7bc07ae0a72a0459869b2bb");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "3cadc16f1e08ee9f4a5c769df08c798d");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "a846903ce12ce47c25f4bf23c99f92ad");
     }
 
     @Test
@@ -116,15 +116,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(10000).withParallelism(10000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "2c67fc07bf4b9882713990d4e014d49e");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "332ef3e0fe55292d6ab2bf7b883fac3e");
 
         session = session.withChunkNumber(5000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "e24ebde1409a8abe1f4dab35c1919e99");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "d88797ef8c67b6d5e85480447b3fb41d");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "78d78d71fa3d380c02fbf51f902f74e1");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "142a69503ce5268b1716752c64b20d68");
     }
 
     @Test
@@ -132,15 +132,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(30000).withParallelism(30000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "cc64d069c57741b2654d0bb4e21e6883");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "86390f038d2d15612f56fccc3d6d2a59");
 
         session = session.withChunkNumber(5000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "c70fe2a14a707ee4cd7120dfcf44139e");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "ea27c1d5e592fe0c235de311ee106ae5");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "12abe5c74a1195ffec7b04d90457b8d7");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "80f52d7957b15a03a346d3cabb9248d4");
     }
 
     @Test
@@ -148,15 +148,15 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(100000).withParallelism(100000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "1b379ecef8408f28611b902a788c3001");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "648ee9a27cb0d6d1ea9dc6903d58fde1");
 
         session = session.withChunkNumber(50000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "7b6bd5faa653ee115a05e820b13827f0");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "a8e5900072a7bce16581e6d9b73d5e20");
 
         session = session.withChunkNumber(100000);
         chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "11780d763791f4bd610dd96efd94248c");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "779de6438a2e1cd8d70ae9ccc62fd203");
     }
 
     @Test
@@ -164,6 +164,6 @@ public class TestCustomerGenerator
     {
         Session session = TEST_SESSION.withScale(15);
         ChunkBoundaries chunkBoundaries = splitWork(CUSTOMER, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "94a17969467a8d7b027ec0709e022942");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), CUSTOMER, session, "64aa5c9deada6149660aed5275b5a99d");
     }
 }
