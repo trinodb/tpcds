@@ -21,9 +21,9 @@ import io.trino.tpcds.row.generator.RowGenerator;
 import io.trino.tpcds.row.generator.RowGeneratorResult;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static io.trino.tpcds.Parallel.splitWork;
@@ -114,14 +114,18 @@ public class Results
             }
 
             RowGeneratorResult result = rowGenerator.generateRowAndChildRows(rowNumber, session, parentRowGenerator, childRowGenerator);
-            List<List<String>> tableRows = result.getRowAndChildRows().stream().map(TableRow::getValues).collect(Collectors.toList());
+            List<TableRow> rowAndChildRows = result.getRowAndChildRows();
+            List<List<String>> tableRows = new ArrayList<>(rowAndChildRows.size());
+            for (TableRow row : rowAndChildRows) {
+                tableRows.add(row.getValues());
+            }
 
             if (result.shouldEndRow()) {
                 rowStop();
                 rowNumber++;
             }
 
-            if (result.getRowAndChildRows().isEmpty()) {
+            if (rowAndChildRows.isEmpty()) {
                 tableRows = computeNext();
             }
 

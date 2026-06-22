@@ -21,7 +21,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.trino.tpcds.Results.constructResults;
 import static java.lang.String.format;
@@ -108,15 +107,17 @@ public class TableGenerator
 
     public static String formatRow(List<String> values, Session session)
     {
-        // replace nulls with the string representation for null
-        values = values.stream().map(value -> value != null ? value : session.getNullString()).collect(Collectors.toList());
+        // replace nulls with the string representation for null while building the row, avoiding a per-row intermediate list
+        String nullString = session.getNullString();
+        char separator = session.getSeparator();
 
         StringBuilder stringBuilder = new StringBuilder();
-        char separator = session.getSeparator();
-        stringBuilder.append(values.get(0));
+        String first = values.get(0);
+        stringBuilder.append(first != null ? first : nullString);
         for (int i = 1; i < values.size(); i++) {
+            String value = values.get(i);
             stringBuilder.append(separator);
-            stringBuilder.append(values.get(i));
+            stringBuilder.append(value != null ? value : nullString);
         }
         if (session.terminateRowsWithSeparator()) {
             stringBuilder.append(separator);
