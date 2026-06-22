@@ -28,6 +28,6 @@ jobs:
           distribution: temurin
           cache: maven
       - name: Install
-        run: mvn install -B -DskipTests
+        run: ./mvnw install -B -DskipTests
       - name: Run Tests
-        run: mvn -B test
+        run: ./mvnw -B test
