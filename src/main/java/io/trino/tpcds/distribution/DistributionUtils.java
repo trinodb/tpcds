@@ -37,6 +37,10 @@ import static io.trino.tpcds.random.RandomValueGenerator.generateUniformRandomIn
 
 public final class DistributionUtils
 {
+    // Split on a separator that is not escaped with a backslash. Compiled once and reused.
+    private static final Pattern COLON_SEPARATOR = Pattern.compile("(?<!\\\\):");
+    private static final Pattern COMMA_SEPARATOR = Pattern.compile("(?<!\\\\),");
+
     private DistributionUtils() {}
 
     protected static final class WeightsBuilder
@@ -69,7 +73,7 @@ public final class DistributionUtils
                     filter(Resources.asCharSource(resource, StandardCharsets.ISO_8859_1).readLines().iterator(), line -> {
                         line = line.trim();
                         return !line.isEmpty() && !line.startsWith("--");
-                    }), line -> ImmutableList.copyOf(Splitter.on(Pattern.compile("(?<!\\\\):")).trimResults().split(line)));
+                    }), line -> ImmutableList.copyOf(Splitter.on(COLON_SEPARATOR).trimResults().split(line)));
         }
         catch (IOException e) {
             throw Throwables.propagate(e);
@@ -78,8 +82,8 @@ public final class DistributionUtils
 
     protected static List<String> getListFromCommaSeparatedValues(String toSplit)
     {
-        List<String> values = Splitter.on(Pattern.compile("(?<!\\\\),")).trimResults().splitToList(toSplit);
-        return values.stream().map(value -> value.replaceAll("\\\\", "")).collect(Collectors.toList());
+        List<String> values = Splitter.on(COMMA_SEPARATOR).trimResults().splitToList(toSplit);
+        return values.stream().map(value -> value.replace("\\", "")).collect(Collectors.toList());
     }
 
     protected static <T> T pickRandomValue(List<T> values, List<Integer> weights, RandomNumberStream randomNumberStream)
