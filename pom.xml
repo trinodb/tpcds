@@ -10,7 +10,7 @@
 
     <groupId>io.trino.tpcds</groupId>
     <artifactId>tpcds</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
 
     <name>tpcds</name>
     <description>Java based generator for TPC-DS data</description>
@@ -28,7 +28,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/trinodb/tpcds.git</connection>
-        <tag>HEAD</tag>
+        <tag>1.6</tag>
         <url>https://github.com/trinodb/tpcds</url>
     </scm>
 
