@@ -61,19 +61,23 @@ public final class JoinKeyUtils
         Table fromTable = fromColumn.getTable();
 
         switch (toTable) {
-            case CATALOG_PAGE:
+            case CATALOG_PAGE -> {
                 return generateCatalogPageJoinKey(randomNumberStream, joinCount, scaling);
-            case DATE_DIM:
+            }
+            case DATE_DIM -> {
                 int year = generateUniformRandomInt(DATE_MINIMUM.getYear(), DATE_MAXIMUM.getYear(), randomNumberStream);
                 return generateDateJoinKey(fromTable, randomNumberStream, fromColumn, joinCount, year, scaling);
-            case TIME_DIM:
+            }
+            case TIME_DIM -> {
                 return generateTimeJoinKey(fromTable, randomNumberStream);
-            default:
+            }
+            default -> {
                 if (toTable.keepsHistory()) {
                     return generateScdJoinKey(toTable, randomNumberStream, joinCount, scaling);
                 }
 
                 return generateUniformRandomKey(1, scaling.getRowCount(toTable), randomNumberStream);
+            }
         }
     }
 
@@ -88,19 +92,14 @@ public final class JoinKeyUtils
         offset %= 365;
 
         switch (type) {
-            case "bi-annual":
+            case "bi-annual" -> {
                 if (offset > 183) {
                     count += 1;
                 }
-                break;
-            case "quarterly": // quarterly
-                count += offset / 91;
-                break;
-            case "monthly": // monthly
-                count += offset / 31;
-                break;
-            default:
-                throw new TpcdsException(format("Invalid catalog_page_type: %s", type));
+            }
+            case "quarterly" -> count += offset / 91;
+            case "monthly" -> count += offset / 31;
+            default -> throw new TpcdsException(format("Invalid catalog_page_type: %s", type));
         }
 
         return count * pagesPerCatalog + page;
@@ -108,36 +107,33 @@ public final class JoinKeyUtils
 
     private static long generateDateJoinKey(Table fromTable, RandomNumberStream randomNumberStream, GeneratorColumn fromColumn, long joinCount, int year, Scaling scaling)
     {
-        int dayNumber;
         switch (fromTable) {
-            case STORE_SALES:
-            case CATALOG_SALES:
-            case WEB_SALES:
+            case STORE_SALES, CATALOG_SALES, WEB_SALES -> {
                 CalendarDistribution.Weights weights = SALES;
                 if (isLeapYear(year)) {
                     weights = SALES_LEAP_YEAR;
                 }
-                dayNumber = pickRandomDayOfYear(weights, randomNumberStream);
+                int dayNumber = pickRandomDayOfYear(weights, randomNumberStream);
                 int result = toJulianDays(new Date(year, 1, 1)) + dayNumber;
                 return result > JULIAN_TODAYS_DATE ? -1 : result;
-
+            }
             // returns are keyed to the sale date, with the lag between sale and return selected within a known range, based on
             // sales channel
-            case STORE_RETURNS:
-            case CATALOG_RETURNS:
-            case WEB_RETURNS:
+            case STORE_RETURNS, CATALOG_RETURNS, WEB_RETURNS -> {
                 return generateDateReturnsJoinKey(fromTable, randomNumberStream, joinCount);
-            case WEB_SITE:
-            case WEB_PAGE:
+            }
+            case WEB_SITE, WEB_PAGE -> {
                 return generateWebJoinKey(fromColumn, randomNumberStream, joinCount, scaling);
-            default:
-                weights = CalendarDistribution.Weights.UNIFORM;
+            }
+            default -> {
+                CalendarDistribution.Weights weights = CalendarDistribution.Weights.UNIFORM;
                 if (isLeapYear(year)) {
                     weights = UNIFORM_LEAP_YEAR;
                 }
-                dayNumber = pickRandomDayOfYear(weights, randomNumberStream);
-                result = toJulianDays(new Date(year, 1, 1)) + dayNumber;
+                int dayNumber = pickRandomDayOfYear(weights, randomNumberStream);
+                int result = toJulianDays(new Date(year, 1, 1)) + dayNumber;
                 return result > JULIAN_TODAYS_DATE ? -1 : result;
+            }
         }
     }
 
@@ -194,17 +190,15 @@ public final class JoinKeyUtils
         int min;
         int max;
         switch (fromTable) {
-            case STORE_RETURNS:
-            case CATALOG_RETURNS:
+            case STORE_RETURNS, CATALOG_RETURNS -> {
                 min = CS_MIN_SHIP_DELAY;
                 max = CS_MAX_SHIP_DELAY;
-                break;
-            case WEB_RETURNS:
+            }
+            case WEB_RETURNS -> {
                 min = 1;
                 max = 120;
-                break;
-            default:
-                throw new TpcdsException("Invalid table for dateJoinReturns");
+            }
+            default -> throw new TpcdsException("Invalid table for dateJoinReturns");
         }
         int lag = generateUniformRandomInt(min * 2, max * 2, randomNumberStream);
         return joinCount + lag;
@@ -214,19 +208,9 @@ public final class JoinKeyUtils
     {
         int hour;
         switch (fromTable) {
-            case STORE_SALES:
-            case STORE_RETURNS:
-                hour = pickRandomHour(STORE, randomNumberStream);
-                break;
-            case CATALOG_SALES:
-            case WEB_SALES:
-            case CATALOG_RETURNS:
-            case WEB_RETURNS:
-                hour = pickRandomHour(CATALOG_AND_WEB, randomNumberStream);
-                break;
-            default:
-                hour = pickRandomHour(UNIFORM, randomNumberStream);
-                break;
+            case STORE_SALES, STORE_RETURNS -> hour = pickRandomHour(STORE, randomNumberStream);
+            case CATALOG_SALES, WEB_SALES, CATALOG_RETURNS, WEB_RETURNS -> hour = pickRandomHour(CATALOG_AND_WEB, randomNumberStream);
+            default -> hour = pickRandomHour(UNIFORM, randomNumberStream);
         }
 
         int seconds = generateUniformRandomInt(0, 3599, randomNumberStream);

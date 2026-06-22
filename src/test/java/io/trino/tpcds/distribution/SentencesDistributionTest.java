@@ -14,10 +14,10 @@
 
 package io.trino.tpcds.distribution;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.distribution.EnglishDistributions.pickRandomSentence;
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SentencesDistributionTest
 {
@@ -25,6 +25,6 @@ public class SentencesDistributionTest
     public void testEscapeBackslashes()
     {
         String result = pickRandomSentence(new TestingRandomNumberStream(2));
-        assertEquals(result, "J, J N VT");
+        assertThat(result).isEqualTo("J, J N VT");
     }
 }

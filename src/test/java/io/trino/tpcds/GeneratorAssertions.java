@@ -28,7 +28,7 @@ import static com.google.common.io.BaseEncoding.base16;
 import static io.trino.tpcds.Results.constructResults;
 import static io.trino.tpcds.TableGenerator.formatRow;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // This class was derived from the GeneratorAssertions class in the following repo
 // https://github.com/airlift/tpch. The license for that class can be found here
@@ -45,7 +45,7 @@ public final class GeneratorAssertions
                 out.write(formatRow(parentAndChildRows.get(0), session).getBytes(ISO_8859_1));
             }
             byte[] md5Digest = out.getMessageDigest().digest();
-            assertEquals(base16().lowerCase().encode(md5Digest), expectedMD5);
+            assertThat(base16().lowerCase().encode(md5Digest)).isEqualTo(expectedMD5);
         }
         catch (IOException e) {
             throw Throwables.propagate(e);

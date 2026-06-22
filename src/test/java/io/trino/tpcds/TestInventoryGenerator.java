@@ -15,7 +15,7 @@
 package io.trino.tpcds;
 
 import io.trino.tpcds.Parallel.ChunkBoundaries;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.trino.tpcds.Parallel.splitWork;

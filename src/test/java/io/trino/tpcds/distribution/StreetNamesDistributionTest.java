@@ -14,12 +14,12 @@
 
 package io.trino.tpcds.distribution;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.distribution.AddressDistributions.StreetNamesWeights.DEFAULT;
 import static io.trino.tpcds.distribution.AddressDistributions.StreetNamesWeights.HALF_EMPTY;
 import static io.trino.tpcds.distribution.AddressDistributions.pickRandomStreetName;
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class StreetNamesDistributionTest
 {
@@ -28,7 +28,7 @@ public class StreetNamesDistributionTest
             throws Exception
     {
         String result = pickRandomStreetName(DEFAULT, new TestingRandomNumberStream(7000));
-        assertEquals(result, "Center");
+        assertThat(result).isEqualTo("Center");
     }
 
     @Test
@@ -36,9 +36,9 @@ public class StreetNamesDistributionTest
             throws Exception
     {
         String result = pickRandomStreetName(HALF_EMPTY, new TestingRandomNumberStream(7000));
-        assertEquals(result, "");
+        assertThat(result).isEmpty();
 
         result = pickRandomStreetName(HALF_EMPTY, new TestingRandomNumberStream(324000));
-        assertEquals(result, "Center");
+        assertThat(result).isEqualTo("Center");
     }
 }

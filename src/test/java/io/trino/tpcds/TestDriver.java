@@ -14,97 +14,86 @@
 
 package io.trino.tpcds;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
 
-import static io.airlift.airline.SingleCommand.singleCommand;
 import static io.trino.tpcds.Table.CALL_CENTER;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.FileAssert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TestDriver
 {
+    private static Driver parse(String... args)
+    {
+        Driver driver = new Driver();
+        new CommandLine(driver).parseArgs(args);
+        return driver;
+    }
+
     @Test
     public void testParsing()
     {
-        Driver driver = singleCommand(Driver.class).parse("--scale", "10", "--suffix", "abcd");
-        assertEquals(driver.options.scale, 10.0);
-        assertEquals(driver.options.suffix, "abcd");
-        assertEquals(driver.options.directory, ".");
+        Driver driver = parse("--scale", "10", "--suffix", "abcd");
+        assertThat(driver.options.scale).isEqualTo(10.0);
+        assertThat(driver.options.suffix).isEqualTo("abcd");
+        assertThat(driver.options.directory).isEqualTo(".");
         Session session = driver.options.toSession();
-        assertFalse(session.generateOnlyOneTable());
+        assertThat(session.generateOnlyOneTable()).isFalse();
     }
 
     @Test
     public void testParsingTableName()
     {
-        Driver driver = singleCommand(Driver.class).parse("--table", "call_center");
-        assertEquals(driver.options.table, "call_center");
+        Driver driver = parse("--table", "call_center");
+        assertThat(driver.options.table).isEqualTo("call_center");
         Session session = driver.options.toSession();
-        assertTrue(session.generateOnlyOneTable());
-        assertEquals(session.getOnlyTableToGenerate(), CALL_CENTER);
+        assertThat(session.generateOnlyOneTable()).isTrue();
+        assertThat(session.getOnlyTableToGenerate()).isEqualTo(CALL_CENTER);
     }
 
     @Test
     public void testInvalidTable()
     {
-        Driver driver = singleCommand(Driver.class).parse("--table", "bad_table_name");
-        assertEquals(driver.options.table, "bad_table_name");
-        try {
-            driver.options.toSession();
-            fail("expected exception");
-        }
-        catch (InvalidOptionException e) {
-            assertEquals(e.getMessage(), "Invalid value for table: 'bad_table_name'. ");
-        }
+        Driver driver = parse("--table", "bad_table_name");
+        assertThat(driver.options.table).isEqualTo("bad_table_name");
+        assertThatThrownBy(driver.options::toSession)
+                .isInstanceOf(InvalidOptionException.class)
+                .hasMessage("Invalid value for table: 'bad_table_name'. ");
     }
 
     @Test
     public void testBadDirectory()
     {
-        Driver driver = singleCommand(Driver.class).parse("--directory", "");
-        assertEquals(driver.options.table, null);
-        try {
-            driver.options.toSession();
-            fail("expected exception");
-        }
-        catch (InvalidOptionException e) {
-            assertEquals(e.getMessage(), "Invalid value for directory: ''. Directory cannot be an empty string");
-        }
+        Driver driver = parse("--directory", "");
+        assertThat(driver.options.table).isNull();
+        assertThatThrownBy(driver.options::toSession)
+                .isInstanceOf(InvalidOptionException.class)
+                .hasMessage("Invalid value for directory: ''. Directory cannot be an empty string");
     }
 
     @Test
     public void testBadSuffix()
     {
-        Driver driver = singleCommand(Driver.class).parse("--suffix", "");
-        assertEquals(driver.options.table, null);
-        try {
-            driver.options.toSession();
-            fail("expected exception");
-        }
-        catch (InvalidOptionException e) {
-            assertEquals(e.getMessage(), "Invalid value for suffix: ''. Suffix cannot be an empty string");
-        }
+        Driver driver = parse("--suffix", "");
+        assertThat(driver.options.table).isNull();
+        assertThatThrownBy(driver.options::toSession)
+                .isInstanceOf(InvalidOptionException.class)
+                .hasMessage("Invalid value for suffix: ''. Suffix cannot be an empty string");
     }
 
     @Test
     public void testInvalidScale()
     {
-        Driver driver = singleCommand(Driver.class).parse("--scale", "-1");
-        try {
-            driver.options.toSession();
-            fail("expected exception");
-        }
-        catch (InvalidOptionException e) {
-            assertEquals(e.getMessage(), "Invalid value for scale: '-1.0'. Scale must be greater than 0 and less than 100000");
-        }
+        Driver driver = parse("--scale", "-1");
+        assertThatThrownBy(driver.options::toSession)
+                .isInstanceOf(InvalidOptionException.class)
+                .hasMessage("Invalid value for scale: '-1.0'. Scale must be greater than 0 and less than 100000");
     }
 
     @Test
     public void testDecimalScale()
     {
-        Driver driver = singleCommand(Driver.class).parse("--scale", "0.01");
-        assertEquals(driver.options.scale, 0.01);
+        Driver driver = parse("--scale", "0.01");
+        assertThat(driver.options.scale).isEqualTo(0.01);
     }
 }
