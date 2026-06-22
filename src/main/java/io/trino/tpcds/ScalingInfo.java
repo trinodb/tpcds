@@ -57,16 +57,12 @@ public class ScalingInfo
         }
 
         // get the scaling model for the table
-        switch (scalingModel) {
-            case STATIC:
-                return computeCountUsingStaticScale();
-            case LINEAR:
-                return computeCountUsingLinearScale(scale);
-            case LOGARITHMIC:
-                return computeCountUsingLogScale(scale);
-            default:
-                throw new TpcdsException("unexpected value for scaling model: " + scalingModel);
-        }
+        return switch (scalingModel) {
+            case STATIC -> computeCountUsingStaticScale();
+            case LINEAR -> computeCountUsingLinearScale(scale);
+            case LOGARITHMIC -> computeCountUsingLogScale(scale);
+            default -> throw new TpcdsException("unexpected value for scaling model: " + scalingModel);
+        };
     }
 
     private long computeCountUsingStaticScale()

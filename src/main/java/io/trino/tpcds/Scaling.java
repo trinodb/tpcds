@@ -79,19 +79,10 @@ public class Scaling
         if (table.keepsHistory()) {
             long uniqueCount = (rowCount / 6) * 3;
             switch ((int) (rowCount % 6)) {
-                case 1:
-                    uniqueCount += 1;
-                    break;
-                case 2:
-                case 3:
-                    uniqueCount += 2;
-                    break;
-                case 4:
-                case 5:
-                    uniqueCount += 3;
-                    break;
-                default:
-                    break;
+                case 1 -> uniqueCount += 1;
+                case 2, 3 -> uniqueCount += 2;
+                case 4, 5 -> uniqueCount += 3;
+                default -> {}
             }
             return uniqueCount;
         }
@@ -117,26 +108,12 @@ public class Scaling
     {
         long rowCount;
         switch (table) {
-            case STORE_SALES:
-            case CATALOG_SALES:
-            case WEB_SALES:
-                rowCount = getRowCount(table);
-                break;
-            case S_CATALOG_ORDER:
-                rowCount = getRowCount(CATALOG_SALES);
-                break;
-            case S_PURCHASE:
-                rowCount = getRowCount(STORE_SALES);
-                break;
-            case S_WEB_ORDER:
-                rowCount = getRowCount(WEB_SALES);
-                break;
-            case S_INVENTORY:
-            case INVENTORY:
-                rowCount = getRowCount(WAREHOUSE) * getIdCount(ITEM);
-                break;
-            default:
-                throw new TpcdsException("Invalid table for date scaling");
+            case STORE_SALES, CATALOG_SALES, WEB_SALES -> rowCount = getRowCount(table);
+            case S_CATALOG_ORDER -> rowCount = getRowCount(CATALOG_SALES);
+            case S_PURCHASE -> rowCount = getRowCount(STORE_SALES);
+            case S_WEB_ORDER -> rowCount = getRowCount(WEB_SALES);
+            case S_INVENTORY, INVENTORY -> rowCount = getRowCount(WAREHOUSE) * getIdCount(ITEM);
+            default -> throw new TpcdsException("Invalid table for date scaling");
         }
 
         Date date = fromJulianDays((int) julianDate);

@@ -15,36 +15,27 @@
 package io.trino.tpcds;
 
 import com.google.common.collect.ImmutableList;
-import io.airlift.airline.Command;
-import io.airlift.airline.HelpOption;
-
-import javax.inject.Inject;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
 
 import java.util.List;
 
-import static io.airlift.airline.SingleCommand.singleCommand;
-
-@Command(name = "dsdgen", description = "data generator for TPC-DS")
+@Command(name = "dsdgen", description = "data generator for TPC-DS", mixinStandardHelpOptions = true)
 public class Driver
+        implements Runnable
 {
-    @Inject
-    public HelpOption helpOption;
-
-    @Inject
+    @Mixin
     public Options options = new Options();
 
     public static void main(String[] args)
     {
-        Driver driver = singleCommand(Driver.class).parse(args);
-        driver.run();
+        System.exit(new CommandLine(new Driver()).execute(args));
     }
 
-    private void run()
+    @Override
+    public void run()
     {
-        if (helpOption.showHelpIfRequested()) {
-            return;
-        }
-
         Session session = options.toSession();
         List<Table> tablesToGenerate;
         if (session.generateOnlyOneTable()) {

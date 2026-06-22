@@ -55,24 +55,21 @@ public class CatalogPageRowGenerator
         int duration;
         int offset;
         switch (catalogInterval) {
-            case 0:
-            case 1:
+            case 0, 1 -> {
                 cpType = "bi-annual";
                 duration = 182;
                 offset = catalogInterval * duration;
-                break;
-            case 2:         // Q1
-            case 3:         // Q2
-            case 4:         // Q3
-            case 5:         // Q4
+            }
+            case 2, 3, 4, 5 -> {       // Q1, Q2, Q3, Q4
                 cpType = "quarterly";
                 duration = 91;
                 offset = (catalogInterval - 2) * duration;
-                break;
-            default:
+            }
+            default -> {
                 cpType = "monthly";
                 duration = 30;
                 offset = (catalogInterval - 6) * duration;
+            }
         }
 
         long cpStartDateId = JULIAN_DATA_START_DATE + offset + ((cpCatalogNumber - 1) / CATALOGS_PER_YEAR) * 365;

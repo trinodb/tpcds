@@ -246,33 +246,15 @@ public final class RandomValueGenerator
         String syntax = pickRandomSentence(stream);
         for (int i = 0; i < syntax.length(); i++) {
             switch (syntax.charAt(i)) {
-                case 'N':
-                    verbiage.append(pickRandomNoun(stream));
-                    break;
-                case 'V':
-                    verbiage.append(pickRandomVerb(stream));
-                    break;
-                case 'J':
-                    verbiage.append(pickRandomAdjective(stream));
-                    break;
-                case 'D':
-                    verbiage.append(pickRandomAdverb(stream));
-                    break;
-                case 'X':
-                    verbiage.append(pickRandomAuxiliary(stream));
-                    break;
-                case 'P':
-                    verbiage.append(pickRandomPreposition(stream));
-                    break;
-                case 'A':
-                    verbiage.append(pickRandomArticle(stream));
-                    break;
-                case 'T':
-                    verbiage.append(pickRandomTerminator(stream));
-                    break;
-                default:
-                    verbiage.append(syntax.charAt(i));  // this is for adding punctuation and white space.
-                    break;
+                case 'N' -> verbiage.append(pickRandomNoun(stream));
+                case 'V' -> verbiage.append(pickRandomVerb(stream));
+                case 'J' -> verbiage.append(pickRandomAdjective(stream));
+                case 'D' -> verbiage.append(pickRandomAdverb(stream));
+                case 'X' -> verbiage.append(pickRandomAuxiliary(stream));
+                case 'P' -> verbiage.append(pickRandomPreposition(stream));
+                case 'A' -> verbiage.append(pickRandomArticle(stream));
+                case 'T' -> verbiage.append(pickRandomTerminator(stream));
+                default -> verbiage.append(syntax.charAt(i));  // this is for adding punctuation and white space.
             }
         }
         return verbiage.toString();

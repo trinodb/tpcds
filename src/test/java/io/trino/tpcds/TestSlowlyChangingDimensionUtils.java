@@ -14,10 +14,10 @@
 
 package io.trino.tpcds;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.SlowlyChangingDimensionUtils.getValueForSlowlyChangingDimension;
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestSlowlyChangingDimensionUtils
 {
@@ -29,7 +29,7 @@ public class TestSlowlyChangingDimensionUtils
         boolean isNewKey = true;
         int flag = 11;
         int result = getValueForSlowlyChangingDimension(flag, isNewKey, oldInt, newInt);
-        assertEquals(result, newInt);
+        assertThat(result).isEqualTo(newInt);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TestSlowlyChangingDimensionUtils
         boolean isNewKey = false;
         int flag = 10;
         int result = getValueForSlowlyChangingDimension(flag, isNewKey, oldInt, newInt);
-        assertEquals(result, newInt);
+        assertThat(result).isEqualTo(newInt);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class TestSlowlyChangingDimensionUtils
         boolean isNewKey = false;
         int flag = 11;
         int result = getValueForSlowlyChangingDimension(flag, isNewKey, oldInt, newInt);
-        assertEquals(result, oldInt);
+        assertThat(result).isEqualTo(oldInt);
     }
 }

@@ -13,13 +13,13 @@
  */
 package io.trino.tpcds;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.Results.constructResults;
 import static io.trino.tpcds.Session.getDefaultSession;
 import static io.trino.tpcds.Table.DBGEN_VERSION;
 import static io.trino.tpcds.TableGenerator.formatRow;
-import static org.testng.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestDbgenVersion
 {
@@ -31,7 +31,7 @@ public class TestDbgenVersion
         Results outputRows = constructResults(DBGEN_VERSION, 1, 1, TEST_SESSION);
         String row = formatRow(outputRows.iterator().next().get(0), TEST_SESSION);
 
-        assertTrue(row.startsWith("4.0.0|"));
-        assertTrue(row.endsWith("|--table dbgen_version|\n"));
+        assertThat(row).startsWith("4.0.0|");
+        assertThat(row).endsWith("|--table dbgen_version|\n");
     }
 }

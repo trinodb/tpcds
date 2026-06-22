@@ -36,41 +36,40 @@ public final class SlowlyChangingDimensionUtils
         String businessKey;
         int tableNumber = table.ordinal();
         switch (modulo) {
-            case 1: // 1 revision
+            case 1 -> { // 1 revision
                 businessKey = makeBusinessKey(rowNumber);
                 isNewKey = true;
                 startDate = JULIAN_DATA_START_DATE - tableNumber * 6;
                 endDate = -1;
-                break;
-            case 2: // 1 of 2 revisions
+            }
+            case 2 -> { // 1 of 2 revisions
                 businessKey = makeBusinessKey(rowNumber);
                 isNewKey = true;
                 startDate = JULIAN_DATA_START_DATE - tableNumber * 6;
                 endDate = ONE_HALF_DATE - tableNumber * 6;
-                break;
-            case 3: // 2 of 2 revisions
+            }
+            case 3 -> { // 2 of 2 revisions
                 businessKey = makeBusinessKey(rowNumber - 1);
                 startDate = ONE_HALF_DATE - tableNumber * 6 + 1;
                 endDate = -1;
-                break;
-            case 4: // 1 of 3 revisions
+            }
+            case 4 -> { // 1 of 3 revisions
                 businessKey = makeBusinessKey(rowNumber);
                 isNewKey = true;
                 startDate = JULIAN_DATA_START_DATE - tableNumber * 6;
                 endDate = ONE_THIRD_DATE - tableNumber * 6;
-                break;
-            case 5: // 2 of 3 revisions
+            }
+            case 5 -> { // 2 of 3 revisions
                 businessKey = makeBusinessKey(rowNumber - 1);
                 startDate = ONE_THIRD_DATE - tableNumber * 6 + 1;
                 endDate = TWO_THIRDS_DATE - tableNumber * 6;
-                break;
-            case 0: // 3 of 3 revisions
+            }
+            case 0 -> { // 3 of 3 revisions
                 businessKey = makeBusinessKey(rowNumber - 2);
                 startDate = TWO_THIRDS_DATE - tableNumber * 6 + 1;
                 endDate = -1;
-                break;
-            default:
-                throw new InternalError("Something's wrong. Positive integers % 6 should always be covered by one of the cases");
+            }
+            default -> throw new InternalError("Something's wrong. Positive integers % 6 should always be covered by one of the cases");
         }
 
         if (endDate > JULIAN_DATA_END_DATE) {
@@ -94,16 +93,15 @@ public final class SlowlyChangingDimensionUtils
     {
         long surrogateKey = (unique / 3) * 6;
         switch ((int) (unique % 3)) { // number of revisions for the ID.
-            case 1: // only one occurrence of this ID
-                surrogateKey += 1;
-                break;
-            case 2: // two revisions of this ID
+            case 1 -> // only one occurrence of this ID
+                    surrogateKey += 1;
+            case 2 -> { // two revisions of this ID
                 surrogateKey += 2;
                 if (julianDate > ONE_HALF_DATE) {
                     surrogateKey += 1;
                 }
-                break;
-            case 0: // three revisions of this ID
+            }
+            case 0 -> { // three revisions of this ID
                 surrogateKey -= 2;
                 if (julianDate > ONE_THIRD_DATE) {
                     surrogateKey += 1;
@@ -111,9 +109,8 @@ public final class SlowlyChangingDimensionUtils
                 if (julianDate > TWO_THIRDS_DATE) {
                     surrogateKey += 1;
                 }
-                break;
-            default:
-                throw new TpcdsException("unique % 3 did not equal 0, 1, or 2");
+            }
+            default -> throw new TpcdsException("unique % 3 did not equal 0, 1, or 2");
         }
 
         if (surrogateKey > scaling.getRowCount(table)) {

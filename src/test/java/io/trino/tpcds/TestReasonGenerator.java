@@ -14,7 +14,7 @@
 
 package io.trino.tpcds;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.tpcds.GeneratorAssertions.assertPartialMD5;
 import static io.trino.tpcds.Session.getDefaultSession;
