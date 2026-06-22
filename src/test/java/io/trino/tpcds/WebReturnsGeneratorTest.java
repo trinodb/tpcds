@@ -38,7 +38,7 @@ public class WebReturnsGeneratorTest
     public void testScaleFactor1()
     {
         Session session = TEST_SESSION.withScale(1);
-        assertPartialMD5(1, session.getScaling().getRowCount(WEB_RETURNS), WEB_RETURNS, session, "e45390d32d1698fef71f05f474a4d748");
+        assertPartialMD5(1, session.getScaling().getRowCount(WEB_RETURNS), WEB_RETURNS, session, "4c413aabff1f06cc23a0d61db4a1df3c");
     }
 
     @Test
@@ -47,7 +47,7 @@ public class WebReturnsGeneratorTest
         // Test the whole table because the C generator has a bug where
         // if you tell it to generate a chunk, it won't generate anything.
         Session session = TEST_SESSION.withScale(10);
-        assertPartialMD5(1, session.getScaling().getRowCount(WEB_RETURNS), WEB_RETURNS, session, "ac0197593d3f4cc3bb46c8ad7e6cd735");
+        assertPartialMD5(1, session.getScaling().getRowCount(WEB_RETURNS), WEB_RETURNS, session, "247dc93969b021f02b9909cc75140ec9");
     }
 
     @Test
@@ -55,15 +55,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(100).withParallelism(1000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "37424e80bf91958fcd60166a6ae239f9");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "b172351b65f17806290dbd1cb2d3831a");
 
         session = session.withChunkNumber(100);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "0fa817c32180f437299b2dd91ddc7fa9");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "4267deb40e3ae1449a7fdc756bc2b0a9");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "c25cc7bf054d3988ccb439abc3642682");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "10550f5c19e1650033f27d9ef54a0a23");
     }
 
     @Test
@@ -71,15 +71,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(300).withParallelism(3000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "4a55e233abd7dfd4816245e885fe85c4");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "0c7abe57014bbfb9a48f4d941fe2dd32");
 
         session = session.withChunkNumber(100);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "f6b8e4c24c8a7f3ca0658eb84ea3b0aa");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "51170cfb70a79b60e5cc3d4a5c7bfc9a");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "730d04e6ca36c6f00f4ee7be033ae6c8");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "834be760dcb7b1668620bca341d50286");
     }
 
     @Test
@@ -87,15 +87,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(1000).withParallelism(10000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "30650f38714ad74eab33921dab172103");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "dee2bcfd74f6f855b82c8544fe7638f8");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "357fe06aefddc031787cfc9325840883");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "bfa4a3c51b18d63987e5235a65975c54");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "ff8fd7304d71020e015d540bdc024aec");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "596cc26fed60960a0fd6735daee6860b");
     }
 
     @Test
@@ -103,15 +103,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(3000).withParallelism(30000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "ea835ad63c39e1a42dd95b3ad8350c0b");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "7dbc6417f084a557b7d65a99dba1c740");
 
         session = session.withChunkNumber(1000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "068bc2a6ee5cbe746aa525852c3a09aa");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "e5e6be3b1b66157be7e91de24eaa2cdc");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "e3bae69f3cd8d94e14e605a21af02b5c");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "6c985baf3a4c8c8fc2c2761168c394c8");
     }
 
     @Test
@@ -119,15 +119,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(10000).withParallelism(100000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "8a1385e7808d886dd68ce2af7c0b3904");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "a4fdd9aa601a5978da09a4ad0726c915");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "1567f1bf4d190739d681c45fa372ad81");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "96d1ecbf0163ed955f37926f67808f54");
 
         session = session.withChunkNumber(100000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "9082045950daa2a46a45c58785695284");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "d5fcda1ec661686a0afa248d69fc41b3");
     }
 
     @Test
@@ -135,15 +135,15 @@ public class WebReturnsGeneratorTest
     {
         Session session = TEST_SESSION.withScale(30000).withParallelism(300000).withChunkNumber(1);
         ChunkBoundaries chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "03a71bba8d64ec69d8cb810c5dc1e5a9");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "d45532fe87e37f446da96db4aed33e42");
 
         session = session.withChunkNumber(10000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "63ea6aa9318aea63bccf3cce03ed861e");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "5fbb137ffaca4075247afaf9b0bdb24b");
 
         session = session.withChunkNumber(100000);
         chunkBoundaries = splitWork(WEB_RETURNS, session);
-        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "0003eba5d83d1c8e21ec14060623b309");
+        assertPartialMD5(chunkBoundaries.getFirstRow(), chunkBoundaries.getLastRow(), WEB_RETURNS, session, "e485ffd538211e39b43701e1038e003a");
     }
 
     @Test
@@ -166,6 +166,6 @@ public class WebReturnsGeneratorTest
     public void testUndefinedScale()
     {
         Session session = TEST_SESSION.withScale(15);
-        assertPartialMD5(1, 10000, WEB_RETURNS, session, "fa6f21b4e1eedc493b369eb5cb580566");
+        assertPartialMD5(1, 10000, WEB_RETURNS, session, "8b19d294d3d046ff0b0051993a13f873");
     }
 }

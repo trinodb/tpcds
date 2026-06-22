@@ -204,7 +204,7 @@ public enum Table
             ReasonRowGenerator.class,
             ReasonGeneratorColumn.values(),
             ReasonColumn.values(),
-            new ScalingInfo(0, LOGARITHMIC, new int[] {0, 35, 45, 55, 60, 65, 67, 70, 72, 75}, 0)),
+            new ScalingInfo(0, LOGARITHMIC, new int[] {0, 75, 75, 75, 75, 75, 75, 75, 75, 75}, 0)),
     SHIP_MODE(new TableFlagsBuilder().build(),
             0,
             0x03,

@@ -24,7 +24,7 @@ import java.util.Calendar;
 public class DbgenVersionRowGenerator
         extends AbstractRowGenerator
 {
-    private static final String DBGEN_VERSION = "2.0.0";
+    private static final String DBGEN_VERSION = "4.0.0";
 
     public DbgenVersionRowGenerator()
     {
