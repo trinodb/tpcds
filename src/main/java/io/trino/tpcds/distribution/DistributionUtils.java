@@ -15,13 +15,13 @@
 package io.trino.tpcds.distribution;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import io.trino.tpcds.TpcdsException;
 import io.trino.tpcds.random.RandomNumberStream;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
@@ -76,7 +76,7 @@ public final class DistributionUtils
                     }), line -> ImmutableList.copyOf(Splitter.on(COLON_SEPARATOR).trimResults().split(line)));
         }
         catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new UncheckedIOException(e);
         }
     }
 
