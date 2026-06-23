@@ -95,13 +95,7 @@ public final class DistributionUtils
     private static <T> T getValueForWeight(int weight, List<T> values, List<Integer> weights)
     {
         checkArgument(values.size() == weights.size());
-        for (int index = 0; index < weights.size(); index++) {
-            if (weight <= weights.get(index)) {
-                return values.get(index);
-            }
-        }
-
-        throw new TpcdsException("random weight was greater than max weight");
+        return values.get(getIndexForWeight(weight, weights));
     }
 
     protected static <T> T getValueForIndexModSize(long index, List<T> values)
@@ -119,13 +113,27 @@ public final class DistributionUtils
 
     private static int getIndexForWeight(int weight, List<Integer> weights)
     {
-        for (int index = 0; index < weights.size(); index++) {
-            if (weight <= weights.get(index)) {
-                return index;
+        // The weights are prefix sums (monotonically non-decreasing), so the smallest index whose
+        // cumulative weight is >= the target is a lower-bound binary search. This returns the exact
+        // same index as a linear scan, including when consecutive weights are equal.
+        int low = 0;
+        int high = weights.size() - 1;
+        int result = -1;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            if (weight <= weights.get(mid)) {
+                result = mid;
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
             }
         }
 
-        throw new TpcdsException("random weight was greater than max weight");
+        if (result == -1) {
+            throw new TpcdsException("random weight was greater than max weight");
+        }
+        return result;
     }
 
     protected static int getWeightForIndex(int index, List<Integer> weights)
